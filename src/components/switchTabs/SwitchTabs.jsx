@@ -6,6 +6,7 @@ const SwitchTabs = ({ data, onTabChange }) => {
   const [selectedTab, setSelectedTab] = useState(0);
   const [left, setLeft] = useState(0);
 
+  //to set which tab is active and onTabChange -> for getting data according to active tab -> like day/week based or movies/shows
   const activeTab = (tab, idx) => {
     setLeft(idx * 100);
     setTimeout(() => {
