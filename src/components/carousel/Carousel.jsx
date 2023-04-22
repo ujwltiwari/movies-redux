@@ -61,6 +61,7 @@ const Carousel = ({ data, loading, endpoint }) => {
             {skeletonItem()}
             {skeletonItem()}
             {skeletonItem()}
+            {skeletonItem()}
           </div>
         ) : (
           <div className="carouselItems" ref={carouselContainer}>

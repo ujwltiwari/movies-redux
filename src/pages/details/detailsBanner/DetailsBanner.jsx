@@ -12,17 +12,22 @@ import CircleRating from "../../../components/circleRating/CircleRating";
 import Img from "../../../components/lazyLoadImage/Img.jsx";
 import PosterFallback from "../../../assets/no-poster.png";
 import PlayIcon from "../PlayIcon";
+import VideoPopup from "../../../components/videoPopUp/VideoPopUp";
 
 const DetailsBanner = ({ video, crew }) => {
   const { mediaType, id } = useParams();
   const { data, loading } = useFetch(`/${mediaType}/${id}`);
   const { url } = useSelector((state) => state.home);
+  const [show, setShow] = useState(false);
+  const [videoId, setVideoId] = useState(null);
+
+  console.log("show", show, videoId);
 
   const genres = data?.genres.map((genre) => genre.id);
 
   const directors = crew?.filter((c) => c.job === "Director");
   const writers = crew?.filter(
-    (w) => w.job === "Screenplay" || w.job === "Screenplay" || w.job === "Story"
+    (w) => w.job === "Screenplay" || w.job === "Writer" || w.job === "Story"
   );
 
   const toHoursAndMinutes = (totalMinutes) => {
@@ -62,7 +67,14 @@ const DetailsBanner = ({ video, crew }) => {
                 <Genres data={genres} />
                 <div className="row">
                   <CircleRating rating={data.vote_average.toFixed(1)} />
-                  <div className="playbtn">
+
+                  <div
+                    className="playbtn"
+                    onClick={() => {
+                      setShow(true);
+                      setVideoId(video.key);
+                    }}
+                  >
                     <PlayIcon />
                     <div className="span">Watch Trailer</div>
                   </div>
@@ -99,7 +111,8 @@ const DetailsBanner = ({ video, crew }) => {
                     </div>
                   )}
                 </div>
-                {directors.length > 0 && (
+
+                {directors?.length > 0 && (
                   <div className="info">
                     <span className="text bold">Director: </span>
                     <div className="text">
@@ -117,8 +130,53 @@ const DetailsBanner = ({ video, crew }) => {
                     </div>
                   </div>
                 )}
+
+                {writers?.length > 0 && (
+                  <div className="info">
+                    <span className="text bold">Writer: </span>
+                    <div className="text">
+                      {writers?.map((writer, idx) => {
+                        return (
+                          <>
+                            <span key={writer.id}>{writer.name}</span>
+                            {
+                              //checking to add comma only till 2nd last index
+                              writers.length - 1 !== idx && ", "
+                            }
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Creator in case of Tv Series */}
+                {data?.created_by?.length > 0 && (
+                  <div className="info">
+                    <span className="text bold">Creator: </span>
+                    <div className="text">
+                      {data?.created_by?.map((creator, idx) => {
+                        return (
+                          <>
+                            <span key={creator.id}>{creator.name}</span>
+                            {
+                              //checking to add comma only till 2nd last index
+                              data?.created_by?.length - 1 !== idx && ", "
+                            }
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
+            <VideoPopup
+              show={show}
+              setShow={setShow}
+              videoId={videoId}
+              setVideoId={setVideoId}
+            />
           </ContentWrapper>
         </>
       ) : (
