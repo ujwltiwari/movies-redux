@@ -4,9 +4,9 @@ import Carousel from "../../../components/carousel/Carousel";
 
 const Recommendation = ({ mediaType, id }) => {
   const { data, loading } = useFetch(`/${mediaType}/${id}/recommendations`);
-  const title = mediaType === "movie" ? "Similar Movies" : "Similar TV Shows";
+  console.log("recommend", data);
 
-  if (data?.results.length <= 0) return;
+  if (data?.results.length === 0) return;
 
   return (
     <Carousel

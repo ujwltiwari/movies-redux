@@ -65,6 +65,7 @@ const Header = () => {
     if (e.key === "Enter" && query.length > 0) {
       navigate(`/search/${query}`);
     }
+
     setTimeout(() => {
       setShowSearch(false);
     }, 1000);
@@ -73,7 +74,7 @@ const Header = () => {
   const navigationHandler = (type) => {
     if (type === "movie") {
       navigate("/explore/movies");
-    } else {
+    } else if (type === "tv") {
       navigate("/explore/tv");
     }
 
