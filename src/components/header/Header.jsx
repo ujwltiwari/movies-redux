@@ -38,7 +38,6 @@ const Header = () => {
   ];
 
   const controlNavbar = () => {
-    console.log(window.scrollY);
     if (window.scrollY > 200) {
       if (window.scrollY > lastScrollY && !mobileMenu) {
         //if current Y co-ordinate is greater than last scrolled Y co-ordinate -> then hide
@@ -84,8 +83,6 @@ const Header = () => {
     }
     setMobileMenu(false);
   };
-
-  console.log(mobileMenu);
 
   return (
     <header className={`header ${mobileMenu ? "mobileView" : ""} ${show}`}>
