@@ -14,7 +14,7 @@ import PosterFallback from "../../assets/no-poster.png";
 import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 
-const Carousel = ({ data, loading }) => {
+const Carousel = ({ data, loading, endpoint }) => {
   const carouselContainer = useRef(null);
   const { url } = useSelector((state) => state.home);
   const navigate = useNavigate();
@@ -72,17 +72,19 @@ const Carousel = ({ data, loading }) => {
                 <div
                   key={item.id}
                   className="carouselItem"
-                  onClick={() => navigate(`/${item.media_type}/${item.id}`)}
+                  onClick={() =>
+                    navigate(`/${item.media_type || endpoint}/${item.id}`)
+                  }
                 >
                   <div className="posterBlock">
                     <Img src={posterUrl} />
                     <CircleRating rating={item.vote_average.toFixed(1)} />
-                    <Genres data={item.genre_ids} />
+                    <Genres data={item.genre_ids.slice(0, 2)} />
                   </div>
                   <div className="textBlock">
                     <span className="title">{item.title || item.name}</span>
                     <span className="date">
-                      {dayjs(item.release_Date).format("MMM D, YYYY")}
+                      {dayjs(item.release_date).format("MMM D, YYYY")}
                     </span>
                   </div>
                 </div>
