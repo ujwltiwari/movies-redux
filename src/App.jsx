@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import useFetch from "./hooks/useFetch"; //Custom hook
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { fetchMoviesFromApi } from "./utils/api";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,7 +9,7 @@ import Home from "./pages/home/Home";
 import Details from "./pages/details/Details";
 import SearchResult from "./pages/searchResult/SearchResult";
 import Explore from "./pages/explore/Explore";
-import PageNotFound from "./pages/404/pageNotFound";
+import PageNotFound from "./pages/404/PageNotFound";
 
 const App = () => {
   const dispatch = useDispatch();
